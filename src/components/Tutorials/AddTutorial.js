@@ -154,9 +154,9 @@ export class AddTutorial extends Component {
 
                                         <div className="inputs border align-center" id="content-txt" style={{ display: (this.state.show === 1 ? "block" : "none") }}>
 
-                                            <center>
+                                         <center>
 
-                                                <CKEditor
+                                                <CKEditor 
                                                     editor={ClassicEditor}
                                                     data={this.state.content}
 
@@ -165,7 +165,7 @@ export class AddTutorial extends Component {
                                                 />
 
                                              
-                                            </center>
+                                            </center> 
                                         </div>
 
                                         <div className="inputs border align-center" id="content-pdf" style={{ display: (this.state.show !== 1 ? "block" : "none") }}>

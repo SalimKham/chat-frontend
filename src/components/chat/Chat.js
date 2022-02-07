@@ -245,12 +245,12 @@ class Chat extends Component {
                         </ul>
                     </div>
                     <div class="search">
-                        <input type="text" name="q" value="" placeholder="Search users .." />
+                        <input type="text" name="q" defaultValue="" placeholder="Search users .." />
                     </div>
                 </div>}
                 {this.state.show_chat_box && this.createChatBox()}
                  <span className={this.state.show_emoji?"show_emoji":"hide_emoji"}  >
-                    <Picker set='messenger'  style={{ border:"solid 1px black" , position: 'fixed', backgroundColor: "white", bottom: '37px', left: '540px', zIndex: '25' }}  showPreview={false} onSelect={this.addEmoji.bind(this)} />
+                    <Picker set='facebook'  style={{ border:"solid 1px black" , position: 'fixed', backgroundColor: "white", bottom: '37px', left: '540px', zIndex: '25' }}  showPreview={false} onSelect={this.addEmoji.bind(this)} />
                 </span>
 
             </div>
