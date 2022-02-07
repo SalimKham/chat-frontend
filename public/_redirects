@@ -1,7 +1,4 @@
 /api/* http://askmoreapp.herokuapp.com/api/:splat 200
 /https://askmore.netlify.app/service-worker.js/ https://askmoreapp.herokuapp.com/service-worker.js 200
-<<<<<<< HEAD
 /* /index.html 200 
-=======
-/* /index.html 200 
->>>>>>> e484adfc57d51251133a1219c6a78abb40d9d559
+
