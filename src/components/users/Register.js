@@ -9,10 +9,9 @@ class Register extends Component {
         super();
         this.state = {
             username: "",
-            email: "",
             password: "",
             confirmPassword: "",
-            type: "2",
+            photo:"",
             errors: {}
         }
         this.onChange = this.onChange.bind(this);
@@ -31,13 +30,12 @@ class Register extends Component {
         e.preventDefault();
         const newUser = {
             "username": this.state.username,
-            "email": this.state.email,
-            "type": this.state.type,
             "password": this.state.password,
             "confirmPassword": this.state.confirmPassword,
+            "photo":this.state.photo
 
         }
-  this.props.createUser(newUser, this.props.history, this.state.type);
+  this.props.createUser(newUser, this.props.history);
     }
     render() {
         const { errors } = this.state;
@@ -49,7 +47,7 @@ class Register extends Component {
                     <div id="formContent">
                         <h2>Sign up</h2>
 
-                        {errors.error && <div class="alert alert-danger">
+                        {errors.error && <div class="alert" style={{ backgroundColor: '#BA3D07', color: 'white' }}>
                             {errors.error}
                         </div>}
                         <form onSubmit={this.onSubmit}>
@@ -57,10 +55,7 @@ class Register extends Component {
                                 value={this.state.username}
                                 onChange={this.onChange}
                             />
-                            <input type="email" className="fadeIn second" name="email" placeholder="Email Address" required="required"
-                                value={this.state.email}
-                                onChange={this.onChange}
-                            />
+                         
 
                             <input type="password" className="fadeIn third" name="password" placeholder="password"
                                 value={this.state.password}
@@ -70,22 +65,15 @@ class Register extends Component {
                                 value={this.state.confirmPassword}
                                 onChange={this.onChange}
                             />
-                            <select className="fadeIn third" id="sel1"
-                                name="type"
-                                value={this.state.type}
-                                onChange={this.onChange}
-                            >
-                                <option value="2">Student</option>
-                                <option value="3">Teacher</option>
-                            </select>
+                           
 
                             <div className="input-groupe btn align-center">
                                 <Link to="/" className="btn bg-dark text-white ">Cancel</Link>
-                                <button type="submit" className="btn btn-success" >Sign Up </button>
+                                <button type="submit" className="btn btn-success" style={{backgroundColor:'#BA3D07'}}  >Sign Up </button>
                             </div>
                         </form>
                         <div id="formFooter">
-                            <Link className="underlineHover" to="/login">Already Have Account?</Link>
+                            <Link className="underlineHover" to="/login" style={{color:'#BA3D07'}} >Already Have Account?</Link>
                         </div>
 
                     </div>

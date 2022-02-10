@@ -1,5 +1,5 @@
 {
-  "name": "askmore-frontend",
+  "name": "chat-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,7 +43,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://askmoreapp.herokuapp.com/",
+  "proxy": "https://chat-server-salim.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",

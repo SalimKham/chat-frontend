@@ -55,7 +55,7 @@ export const updateProfile = (newInfo) => async dispatch => {
 
 
 
-export const uploadPicture = (id,file, crop) => async dispatch => {
+export const uploadPicture = (file, crop) => async dispatch => {
     try {
         
         const formData = new FormData();
@@ -66,11 +66,12 @@ export const uploadPicture = (id,file, crop) => async dispatch => {
             }
         }
 
-        const res= await axios.post("/api/profile/uploadPhoto/?cropString=" + crop+"&idInfo="+id, formData, config);
+        const res= await axios.post("/api/users/updatephoto/?cropString=" + crop, formData, config);
      
         dispatch({
             type: UPDATE_PROFILE_PICTURE,
             payload: res.data
+           
         });
       
    

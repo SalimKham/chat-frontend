@@ -44,7 +44,7 @@ class Login extends Component {
                 <div class="wrapper fadeInDown">
                     <div id="formContent">
                         <h2>Log in</h2>
-                        {errors.username && <div class="alert alert-danger">
+                        {errors.username && <div class="alert" style={{backgroundColor:'#BA3D07',color:'white'}}>
                             {errors.username} OR  {errors.password}
                         </div>}
                         {errors.error && <div class="alert alert-danger">
@@ -62,14 +62,13 @@ class Login extends Component {
 
                             <div className="input-groupe btn align-center">
                                 <Link to="/" className="btn bg-dark text-white">Cancel</Link>
-                                <button type="submit" className="btn btn-success" >Login </button>
+                                <button type="submit" className="btn btn-success" style={{backgroundColor:'#BA3D07'}} >Login </button>
                             </div>
                         </form>
 
 
                         <div id="formFooter">
-                            <Link class="underlineHover" to="">Forgot Password?</Link>
-                            <Link class="underlineHover" to="/register">Sign up</Link>
+                            <Link class="underlineHover" style={{color:'#BA3D07'}} to="/register">Sign up</Link>
                         </div>
 
                     </div>

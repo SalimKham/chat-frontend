@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserList } from '../../actions/userActions';
 import { senMessage, getMessages } from '../../actions/ChatActions';
-import { SERVER_URL } from '../../actions/types';
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 
@@ -35,20 +34,28 @@ class Chat extends Component {
         this.setState({ chat_box_user: user, show_chat_box: true, minimize_chat_box: false });
         this.props.getMessages(user.id);
     }
+    componentWillMount() {
+        this.props.getUserList();
+    
+    }
     createUsersList() {
         let listItems = [];
         const list = this.props.user.userList;
+
         if (list.length > 0) {
 
             list.map(user => {
+                const userphoto = user[3] === "" ? '/images/no-avatar.th.png':user[3];
                 listItems.push(
-                    <li id="" style={{ backgroundColor: "#616161", color: "white" }} onClick={this.setChatBoxUser.bind(this, { username: user[1], id: user[0], state: user[3], photo: (user[5] ? (user[5].split(" ")[0]) : "/images/no-avatar.th.png") })}>
-                        <span class={user[3] === 2 ? "online" : "offline"}></span>
+                    <li id="" style={{ backgroundColor: "#616161", color: "white" }} onClick={this.setChatBoxUser.bind(this, { username: user[1], id: user[0], state: user[2], photo:user[3]})}>
+                        <span class={user[2] === 1 ? "online" : "offline"}></span>
+                        <img alt='' src={userphoto} class="avatar" />
                         {user[1]}
 
                     </li>
-
+                   
                 )
+
                return null
             })
 
@@ -107,7 +114,7 @@ class Chat extends Component {
     createMessagesList() {
         let listItems = [];
         const list = this.props.chat.list;
-        const photo = (this.props.currentUser.user && this.props.currentUser.user.photo) ? (SERVER_URL + this.props.currentUser.user.photo.split(" ")[0]) : "/images/no-avatar.th.png"
+        const photo = (this.props.currentUser.user && this.props.currentUser.user.photo) ? ( this.props.currentUser.user.photo) : "/images/no-avatar.th.png"
         if (list.length > 0) {
             let index = 1;
             list.map(message => {
@@ -144,9 +151,7 @@ class Chat extends Component {
 
         }
     }
-    componentWillMount() {
-        this.props.getUserList();
-    }
+   
     componentWillUnmount() {
         clearInterval(this.interval);
     }
@@ -189,7 +194,7 @@ class Chat extends Component {
     createChatBox() {
         const result =
             <div id="chat_box" style={{ width: "400px" }}>
-                <div class="title" onClick={this.minimizeChatBox} style={{ backgroundColor: "#155EB6", color: "white" }}><span id="state" class={this.state.chat_box_user.state === 2 ? "online" : "offline"}></span>{this.state.chat_box_user.username}<a style={{ backgroundColor: "white" }} onClick={this.closeChatBox.bind(this)} class="remove" ></a><a style={{ backgroundColor: "white" }} onClick={this.minimizeChatBox} class="hide" ></a></div>
+                <div class="title" onClick={this.minimizeChatBox} style={{ backgroundColor: "black", color: "white" }}><span id="state" class={this.state.chat_box_user.state === 1 ? "online" : "offline"}></span>{this.state.chat_box_user.username}<a  onClick={this.closeChatBox.bind(this)} class="fa"  style={{fontSize:'18px',color:'white',position:'fixed',left:'575px',textDecoration:'none' }}>&#xf00d;</a><a  onClick={this.minimizeChatBox} class="fa fa-eye-slash" style={{ color:'white',textDecoration:'none',marginLeft:'270px' }} ></a></div>
                 {!this.state.minimize_chat_box && <div class="box_body">
                     <div class="msg_list"><a href="#" class="more">view more</a><ul style={{ overflowY: "auto" }}>
                         {this.createMessagesList()}
@@ -202,8 +207,8 @@ class Chat extends Component {
                     ></textarea>
 
                         <div className="col-md-12  text-right ">
-                            <button type="submit" className="btn btn-success btn-sm" onClick={this.onSubmit} > Send </button>
-                            <button  className="btn btn-primary btn-sm" onClick={this.showOrHideEmojis.bind(this)} > Emoji </button>
+                            <button type="submit" className="btn btn-dark" onClick={this.onSubmit} > Send </button>
+                            <button  className="btn btn-warning" style={{position:'fixed' , left:'550px',backgroundColor:'#BA3D07'}} onClick={this.showOrHideEmojis.bind(this)} > Emoji </button>
                         </div>
                     </div>
 
@@ -221,36 +226,28 @@ class Chat extends Component {
         this.setState({ show: !this.state.show })
     }
     render() {
+        console.log(this.props.currentUser.user);
+        const loggedIn = (localStorage.jwtToken ? true : false);
+        
         return (
             <div >
-                {!this.state.show && <a id="chat_toggle" onClick={this.showOrHide.bind(this)} className="bold align-center" >Chat</a>}
-                {this.state.show && <div id="user_online" style={{ top: "100px" }} >
-                    <div class="title" style={{ backgroundColor: "black", top: "100px", color: "white" }}>
-                        <span class="chat-icon" ></span>Users
+                
+                {loggedIn && <div id="user_online" style={{ top: "100px" }} >
+                
+                    <div class="title" style={{ backgroundColor: "#BA3D07", top: "100px", color: "white" }}>
+                    <span class="chat-icon" ></span>Users
 	        	</div>
-                    <div class="config" style={{ backgroundColor: "#155EB6" }}>
-                        <span class="configuration" >
-                            <div class="status">
-                                <a href="#" class="offline">offline</a>
-                                <a href="#" class="online">online</a>
-                            </div>
-                        </span>
-                        <a href="#" class="scrollup" ></a>
-                        <a href="#" class="scrolldown" ></a>
-                        <a onClick={this.showOrHide.bind(this)} class="hide" ></a>
-                    </div>
+                  
                     <div class="scroll">
                         <ul>
                             {this.createUsersList()}
                         </ul>
                     </div>
-                    <div class="search">
-                        <input type="text" name="q" defaultValue="" placeholder="Search users .." />
-                    </div>
+                    
                 </div>}
                 {this.state.show_chat_box && this.createChatBox()}
                  <span className={this.state.show_emoji?"show_emoji":"hide_emoji"}  >
-                    <Picker set='facebook'  style={{ border:"solid 1px black" , position: 'fixed', backgroundColor: "white", bottom: '37px', left: '540px', zIndex: '25' }}  showPreview={false} onSelect={this.addEmoji.bind(this)} />
+                    <Picker set='google'  style={{ border:"solid 1px black" , position: 'fixed', backgroundColor: "white", bottom: '37px', left: '540px', zIndex: '25' }}  showPreview={false} onSelect={this.addEmoji.bind(this)} />
                 </span>
 
             </div>
